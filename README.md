@@ -78,38 +78,28 @@ tokenizer-filter-machine/
 
 ---
 
-## 🚀 Kurulum ve Çalıştırma
+## 🚀 Başlatma Komutları
 
-### 1. Python Backend Kurulumu
+### 1. Python Backend
 
 ```powershell
 cd backend
 pip install -r requirements.txt
-```
-
-### 2. Python Backend Başlatma
-
-```powershell
 python main.py
 ```
 
-> **Not:** İlk çalıştırmada Stanza Türkçe modeli (~200MB) indirilecektir.
+> **Not:** İlk çalıştırmada Stanza Türkçe modeli (~200 MB) indirilecektir.
 
-### 3. C# Projesi Derleme
+### 2. C# Uygulaması
 
 ```powershell
 cd TurkMorph
 dotnet restore
 dotnet build
-```
-
-### 4. Uygulamayı Çalıştırma
-
-```powershell
 dotnet run
 ```
 
-Veya Visual Studio'dan `TurkMorph.csproj` dosyasını açın ve F5 tuşuna basın.
+Veya Visual Studio'dan `TurkMorph.csproj` dosyasını açıp **F5** tuşuna basabilirsiniz.
 
 ---
 
