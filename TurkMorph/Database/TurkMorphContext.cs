@@ -60,10 +60,9 @@ namespace TurkMorph.Database
         /// <param name="databasePath">SQLite veritabanı dosya yolu (varsayılan: turkmorph.db)</param>
         public TurkMorphContext(string databasePath = null)
         {
-            _databasePath = databasePath ?? Path.Combine(
-                AppDomain.CurrentDomain.BaseDirectory,
-                "turkmorph.db"
-            );
+            // Use the current working directory so the DB is created alongside the project
+            var baseDir = Directory.GetCurrentDirectory();
+            _databasePath = databasePath ?? Path.Combine(baseDir, "turkmorph.db");
 
             _connectionString = $"Data Source={_databasePath};Version=3;";
 
