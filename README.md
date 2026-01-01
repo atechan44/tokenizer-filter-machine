@@ -1,171 +1,194 @@
-# TurkMorph - Türkçe Morfolojik Analiz
+# Turkish NLP Analyzer
 
-## 📋 Proje Hakkında
+A comprehensive Turkish word analysis system combining a Python FastAPI backend with a Windows Forms desktop application.
 
-**TurkMorph**, Türkçe metinlerin morfolojik analizini yapan, OOP prensiplerini ve modern yazılım mimarisini kullanan bir masaüstü uygulamasıdır.
+![Turkish NLP Analyzer](https://img.shields.io/badge/Turkish-NLP-blue)
+![Python](https://img.shields.io/badge/Python-3.10+-green)
+![.NET](https://img.shields.io/badge/.NET-8.0-purple)
 
-### 🎯 Öğrenilen Kavramlar
+## 📋 Overview
 
-| Kavram | Uygulama |
-|--------|----------|
-| **Abstract Class** | `WordRoot.cs` - Soyut temel sınıf |
-| **Inheritance** | `NounRoot`, `VerbRoot`, `AdjectiveRoot` türetilmiş sınıflar |
-| **Polymorphism** | Her sınıfın kendi `Validate()` implementasyonu |
-| **Interface** | `IWordValidator`, `INlpService` |
-| **Factory Pattern** | `WordFactory.cs` - Nesne oluşturma fabrikası |
-| **Repository Pattern** | `WordRootRepository.cs` - Veri erişim katmanı |
-| **Async/Await** | Non-blocking API çağrıları |
-| **Microservice** | Python NLP API + C# Client mimarisi |
+Turkish NLP Analyzer is a dual-component system that provides:
+- **Morphological Analysis**: Analyze Turkish words to extract root forms, POS tags, and grammatical features
+- **Word Classification**: Organize words by Part of Speech (NOUN, VERB, ADJ, etc.)
+- **Batch Processing**: Process CSV files containing thousands of words
+- **Statistics Dashboard**: Visual representation of word distribution
 
----
-
-## 🏗️ Mimari (5 Katman)
-
-```
-┌─────────────────────────────────────────┐
-│     Layer 5: UI (DevExpress WinForms)   │
-├─────────────────────────────────────────┤
-│     Layer 4: Service (HTTP Client)      │
-├─────────────────────────────────────────┤
-│     Layer 3: Core OOP (Models)          │
-├─────────────────────────────────────────┤
-│     Layer 2: Database (SQLite/Dapper)   │
-├─────────────────────────────────────────┤
-│     Layer 1: Backend (Python/Stanza)    │
-└─────────────────────────────────────────┘
-```
-
----
-
-## 📂 Proje Yapısı
+## 🏗️ Architecture
 
 ```
 tokenizer-filter-machine/
-├── backend/
-│   ├── main.py              # FastAPI + Stanza NLP API
-│   └── requirements.txt     # Python bağımlılıkları
-│
-├── TurkMorph/
-│   ├── TurkMorph.csproj     # Proje dosyası
-│   ├── Program.cs           # Giriş noktası
-│   │
-│   ├── Models/              # OOP Sınıfları
-│   │   ├── WordRoot.cs      # Abstract Class
-│   │   ├── NounRoot.cs      # Inheritance
-│   │   ├── VerbRoot.cs      # Polymorphism
-│   │   └── AdjectiveRoot.cs
-│   │
-│   ├── Interfaces/
-│   │   ├── IWordValidator.cs
-│   │   └── INlpService.cs
-│   │
-│   ├── Services/
-│   │   ├── NlpApiService.cs # HTTP Client
-│   │   ├── WordFactory.cs   # Factory Pattern
-│   │   └── DTOs/
-│   │       └── AnalysisResult.cs
-│   │
-│   ├── Database/
-│   │   ├── TurkMorphContext.cs
-│   │   └── Repositories/
-│   │       └── WordRootRepository.cs
-│   │
-│   └── Forms/
-│       └── MainForm.cs      # DevExpress UI
-│
-└── turkmorph.db             # SQLite (runtime)
+├── backend/                    # Python FastAPI
+│   ├── main.py                 # API endpoints
+│   ├── analyzer.py            # Stanza NLP wrapper
+│   └── requirements.txt       # Python dependencies
+├── TurkishNLP.Desktop/        # C# Windows Forms
+│   ├── Forms/                 # UI Forms
+│   ├── Models/                # Data models (OOP)
+│   ├── Services/              # Business logic
+│   └── Program.cs             # Entry point
+└── database/
+    └── words.db               # SQLite database
 ```
 
----
+## 🚀 Quick Start
 
-## 🚀 Kurulum ve Çalıştırma
+### Prerequisites
+- Python 3.10+
+- .NET 8.0 SDK
+- DevExpress WinForms (Trial or Licensed)
 
-### 1. Python Backend Kurulumu
+### 1. Start Python Backend
 
-```powershell
+```bash
 cd backend
 pip install -r requirements.txt
+python -m uvicorn main:app --reload --port 8000
 ```
 
-### 2. Python Backend Başlatma
+The API will be available at `http://localhost:8000`
+- Swagger UI: `http://localhost:8000/docs`
+- Health Check: `http://localhost:8000/health`
 
-```powershell
-python main.py
-```
+### 2. Run Desktop Application
 
-> **Not:** İlk çalıştırmada Stanza Türkçe modeli (~200MB) indirilecektir.
-
-### 3. C# Projesi Derleme
-
-```powershell
-cd TurkMorph
+```bash
+cd TurkishNLP.Desktop
 dotnet restore
-dotnet build
-```
-
-### 4. Uygulamayı Çalıştırma
-
-```powershell
 dotnet run
 ```
 
-Veya Visual Studio'dan `TurkMorph.csproj` dosyasını açın ve F5 tuşuna basın.
+Or open in Visual Studio and press F5.
 
----
+## 📦 Dependencies
 
-## 📷 Kullanım
-
-1. **Python API'yi başlatın** (`python backend/main.py`)
-2. **C# uygulamasını çalıştırın**
-3. **Metin girin** (örn: "Kitapları okudum ve çok beğendim")
-4. **"Analiz Et" butonuna basın**
-5. Grid'de kelimelerin kökü, türü ve özellikleri görüntülenir
-6. **"Veritabanına Kaydet"** ile sonuçları SQLite'a kaydedin
-
----
-
-## 🔧 API Endpoints
-
-| Endpoint | Method | Açıklama |
-|----------|--------|----------|
-| `/health` | GET | API sağlık kontrolü |
-| `/analyze/word` | POST | Kelime analizi |
-| `/clean` | POST | Metin temizleme |
-| `/batch/analyze` | POST | Toplu analiz |
-
-### Örnek İstek
-
-```bash
-curl -X POST http://127.0.0.1:8000/analyze/word \
-  -H "Content-Type: application/json" \
-  -d '{"text": "kitapları okudum"}'
+### Python Backend
+```
+fastapi>=0.109.0
+uvicorn>=0.27.0
+stanza>=1.7.0
+pydantic>=2.6.0
 ```
 
-### Örnek Yanıt
+### C# Desktop
+```
+DevExpress.WindowsForms
+Microsoft.Data.Sqlite
+System.Text.Json
+```
+
+## 🎯 Features
+
+### Dashboard
+- 9 colored tiles showing word count per POS
+- Pie chart visualization
+- Auto-refresh every 30 seconds
+
+### Word Analysis
+- Single word morphological analysis
+- Shows: Root, POS, Morphological Features
+- Save to database
+
+### Batch Processing
+- Import CSV files
+- Progress tracking
+- Bulk save to database
+
+### Database Viewer
+- Filter by POS
+- Search functionality
+- Export to JSON
+- Delete selected
+
+## ⌨️ Keyboard Shortcuts
+
+| Shortcut | Action |
+|----------|--------|
+| F5 | Refresh Dashboard |
+| Ctrl+O | Open CSV File |
+| Ctrl+S | Export to JSON |
+| F1 | About Dialog |
+| ESC | Cancel Batch |
+
+## 🔧 Configuration
+
+Edit `TurkishNLP.Desktop/appsettings.json`:
 
 ```json
-[
-  {"word": "kitapları", "lemma": "kitap", "pos": "NOUN", "feats": "Case=Acc|Number=Plur"},
-  {"word": "okudum", "lemma": "oku", "pos": "VERB", "feats": "Tense=Past|Person=1"}
-]
+{
+  "ApiBaseUrl": "http://localhost:8000",
+  "DatabasePath": "words.db",
+  "Theme": "The Bezier"
+}
 ```
 
----
+## 📊 API Endpoints
 
-## 📚 Teknoloji Stack
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST | /analyze | Analyze single word |
+| POST | /analyze-batch | Analyze multiple words |
+| GET | /health | Health check |
 
-| Teknoloji | Kullanım Amacı |
-|-----------|----------------|
-| **Python 3.8+** | NLP Backend |
-| **FastAPI** | REST API Framework |
-| **Stanza** | Türkçe NLP (Stanford) |
-| **.NET 8** | C# Runtime |
-| **DevExpress** | Modern WinForms UI |
-| **Dapper** | Micro ORM |
-| **SQLite** | Veritabanı |
+### Example Request
+```bash
+curl -X POST "http://localhost:8000/analyze" \
+  -H "Content-Type: application/json" \
+  -d '{"word": "gidiyorum"}'
+```
 
----
+### Example Response
+```json
+{
+  "word": "gidiyorum",
+  "root": "git",
+  "pos": "VERB",
+  "features": {
+    "Aspect": "Prog",
+    "Number": "Sing",
+    "Person": "1",
+    "Tense": "Pres"
+  }
+}
+```
 
-## 📝 Lisans
+## 📁 Sample Data
 
-Bu proje eğitim amaçlı hazırlanmıştır.
+### CSV Format
+```
+kelime
+kitap
+ev
+gitmek
+güzel
+```
+
+### JSON Export Format
+```json
+{
+  "NOUN": ["kitap", "ev"],
+  "VERB": ["gitmek"],
+  "ADJ": ["güzel"]
+}
+```
+
+## 🧪 Testing Checklist
+
+- [ ] Backend health check works
+- [ ] Single word analysis works
+- [ ] Batch CSV processing works
+- [ ] Database CRUD operations work
+- [ ] JSON export/import works
+- [ ] Dashboard statistics update
+
+## 📄 License
+
+MIT License
+
+## 👥 Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Commit your changes
+4. Push to the branch
+5. Open a Pull Request

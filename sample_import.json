@@ -1,0 +1,110 @@
+{
+    "NOUN": [
+        "kitap",
+        "ev",
+        "araba",
+        "okul",
+        "kalem",
+        "masa",
+        "sandalye",
+        "bilgisayar",
+        "telefon",
+        "pencere",
+        "kapı",
+        "bahçe",
+        "çiçek",
+        "ağaç",
+        "yaprak",
+        "deniz",
+        "göl",
+        "nehir",
+        "dağ",
+        "tepe"
+    ],
+    "VERB": [
+        "okumak",
+        "yazmak",
+        "konuşmak",
+        "dinlemek",
+        "görmek",
+        "duymak",
+        "hissetmek",
+        "düşünmek",
+        "anlamak",
+        "bilmek",
+        "öğrenmek",
+        "öğretmek",
+        "çalışmak",
+        "dinlenmek",
+        "uyumak",
+        "uyanmak",
+        "yemek",
+        "içmek",
+        "gitmek",
+        "gelmek"
+    ],
+    "ADJ": [
+        "güzel",
+        "çirkin",
+        "büyük",
+        "küçük",
+        "uzun",
+        "kısa",
+        "yeni",
+        "eski",
+        "sıcak",
+        "soğuk",
+        "hızlı",
+        "yavaş",
+        "kolay",
+        "zor",
+        "temiz",
+        "kirli"
+    ],
+    "ADV": [
+        "hızla",
+        "yavaşça",
+        "sessizce",
+        "dikkatle",
+        "kolayca"
+    ],
+    "PRON": [
+        "ben",
+        "sen",
+        "o",
+        "biz",
+        "siz",
+        "onlar"
+    ],
+    "CONJ": [
+        "ve",
+        "ama",
+        "çünkü",
+        "veya",
+        "fakat"
+    ],
+    "ADP": [
+        "için",
+        "ile",
+        "gibi",
+        "kadar",
+        "üzere"
+    ],
+    "DET": [
+        "bir",
+        "bu",
+        "şu",
+        "her",
+        "hiç"
+    ],
+    "NUM": [
+        "bir",
+        "iki",
+        "üç",
+        "dört",
+        "beş",
+        "on",
+        "yüz",
+        "bin"
+    ]
+}
