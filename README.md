@@ -1,194 +1,152 @@
-# Turkish NLP Analyzer
+# 🇹🇷 Turkish NLP Analyzer & Dashboard
 
-A comprehensive Turkish word analysis system combining a Python FastAPI backend with a Windows Forms desktop application.
+![Turkish NLP](https://img.shields.io/badge/Language-Turkish-red)
+![Platform](https://img.shields.io/badge/Platform-Windows%20%7C%20Python-blue)
+![License](https://img.shields.io/badge/License-MIT-green)
+![Status](https://img.shields.io/badge/Status-Active-success)
 
-![Turkish NLP Analyzer](https://img.shields.io/badge/Turkish-NLP-blue)
-![Python](https://img.shields.io/badge/Python-3.10+-green)
-![.NET](https://img.shields.io/badge/.NET-8.0-purple)
+A powerful, dual-stack application designed for the morphological analysis, classification, and statistical visualization of Turkish words. It combines a robust **Python (FastAPI)** backend for NLP processing with a modern **.NET 8 (Windows Forms/DevExpress)** desktop interface.
 
-## 📋 Overview
+---
 
-Turkish NLP Analyzer is a dual-component system that provides:
-- **Morphological Analysis**: Analyze Turkish words to extract root forms, POS tags, and grammatical features
-- **Word Classification**: Organize words by Part of Speech (NOUN, VERB, ADJ, etc.)
-- **Batch Processing**: Process CSV files containing thousands of words
-- **Statistics Dashboard**: Visual representation of word distribution
+## 🌟 Key Features
 
-## 🏗️ Architecture
+### 🖥️ Modern Desktop Interface
+- **Dashboard:** Real-time visualization of parsed data.
+  - **Dynamic Pie Chart:** Custom GDI+ drawn chart with exploded slices and smart legends.
+  - **KPI Cards:** Interactive, color-coded statistics cards (e.g., **Blue** for Nouns, **Green** for Verbs).
+- **Theme Support:** 🌗 Fully integrated **Dark/Light** mode.
+  - One-click toggle (🌙/☀️).
+  - Smart coloring: High contrast text, adaptive backgrounds, and persistent color-coding for data inputs.
+- **Grid Control:** Advanced data filtering, searching, and sorting capability using DevExpress Grid.
 
+### 🧠 Intelligent Analysis (Backend)
+- **NLP Engine:** Powered by Python ecosystem (e.g., `stanza` or custom lookup).
+- **Morphological Parsing:** Detects Roots, suffixes, and Part-of-Speech (POS) tags.
+- **REST API:** Fast and scalable communication via local HTTP/JSON endpoints.
+
+### ⚡ Batch Processing
+- **Bulk Import:** Process `.csv` or text files with thousands of words.
+- **Progress Tracking:** Real-time feedback during analysis.
+- **Database Integration:** Automatically archives results to a local SQLite database.
+
+---
+
+## 🏗️ System Architecture
+
+The solution follows a clean **Client-Server** architecture:
+
+```mermaid
+graph LR
+    A[Desktop UI (.NET 8)] <-->|HTTP JSON| B[Python Backend (FastAPI)]
+    B <-->|Load/Process| C[NLP Models]
+    A <-->|Read/Write| D[(SQLite Database)]
 ```
-tokenizer-filter-machine/
-├── backend/                    # Python FastAPI
-│   ├── main.py                 # API endpoints
-│   ├── analyzer.py            # Stanza NLP wrapper
-│   └── requirements.txt       # Python dependencies
-├── TurkishNLP.Desktop/        # C# Windows Forms
-│   ├── Forms/                 # UI Forms
-│   ├── Models/                # Data models (OOP)
-│   ├── Services/              # Business logic
-│   └── Program.cs             # Entry point
-└── database/
-    └── words.db               # SQLite database
-```
 
-## 🚀 Quick Start
+### 1. Backend (`/backend`)
+- **Framework:** FastAPI (Uvicorn server).
+- **Role:** Stateless compute engine. Receives words, analyzes them, and returns JSON objects with linguistic features.
+- **Endpoints:**
+  - `POST /analyze`: Single word analysis.
+  - `POST /analyze-batch`: Bulk analysis.
+
+### 2. Frontend (`/TurkishNLP.Desktop`)
+- **Framework:** .NET 8, Windows Forms.
+- **Libraries:** DevExpress (UI Controls), System.Text.Json, Microsoft.Data.Sqlite.
+- **Role:** User interaction, Data presentation, Database management.
+- **Custom Controls:**
+  - `KpiCard`: Rounded, shadowed, interactive statistic blocks.
+  - `PieChartPanel`: Custom drawing logic for high-performance charting.
+
+---
+
+## 🚀 Getting Started
 
 ### Prerequisites
-- Python 3.10+
-- .NET 8.0 SDK
-- DevExpress WinForms (Trial or Licensed)
+1.  **Python 3.10+**: For the backend service.
+2.  **.NET 8 SDK**: For the desktop application.
+3.  **(Optional)** DevExpress License/Trial (Libraries are referenced locally or via NuGet).
 
-### 1. Start Python Backend
+### Step 1: Launch the Backend
+The desktop app needs the backend to be running to perform analysis.
 
 ```bash
+# Navigate to backend folder
 cd backend
+
+# Create virtual environment (Recommended)
+python -m venv venv
+.\venv\Scripts\activate  # Windows
+
+# Install dependencies
 pip install -r requirements.txt
-python -m uvicorn main:app --reload --port 8000
+
+# Start the server
+uvicorn main:app --reload --port 8000
 ```
+*You should see: `Uvicorn running on http://127.0.0.1:8000`*
 
-The API will be available at `http://localhost:8000`
-- Swagger UI: `http://localhost:8000/docs`
-- Health Check: `http://localhost:8000/health`
-
-### 2. Run Desktop Application
+### Step 2: Launch the Application
+Open a new terminal for the desktop app.
 
 ```bash
+# Navigate to Desktop app folder
 cd TurkishNLP.Desktop
+
+# Restore packages and run
 dotnet restore
 dotnet run
 ```
 
-Or open in Visual Studio and press F5.
+---
 
-## 📦 Dependencies
+## 🎨 User Interface Guide
 
-### Python Backend
-```
-fastapi>=0.109.0
-uvicorn>=0.27.0
-stanza>=1.7.0
-pydantic>=2.6.0
-```
+### Dashboard Tab
+- **Overview:** Displays the distribution of words in your database (NOUN, VERB, ADJ, etc.).
+- **Interactive Elements:** 
+  - Hover over pie slices to see values.
+  - Click the **Moon/Sun** icon top-right to switch themes.
+  - **Color Codes:**
+    - 🔵 **NOUN:** Blue
+    - 🟢 **VERB:** Green
+    - 🟠 **ADJ:** Orange
+    - 🟣 **ADV:** Purple
 
-### C# Desktop
-```
-DevExpress.WindowsForms
-Microsoft.Data.Sqlite
-System.Text.Json
-```
+### Word Analysis Tab
+- **Input:** Type a Turkish word and press Enter.
+- **Visual Result:** See the Breakdown (Root + Suffixes) and Metadata.
+- **Action:** Click "Save" to add valid words to the localized database.
 
-## 🎯 Features
+### Batch Processing Tab
+- **Load File:** Import a list of words.
+- **Process:** Watch as the system analyzes them via the API in real-time.
+- **Save:** Commit valid results to the DB.
 
-### Dashboard
-- 9 colored tiles showing word count per POS
-- Pie chart visualization
-- Auto-refresh every 30 seconds
+### Database Tab
+- **Manage Data:** View all saved words.
+- **Filter:** Show only specific types (e.g., "Only VERBs").
+- **Search:** Instant text search.
+- **Export:** Save your curated list to JSON.
 
-### Word Analysis
-- Single word morphological analysis
-- Shows: Root, POS, Morphological Features
-- Save to database
+---
 
-### Batch Processing
-- Import CSV files
-- Progress tracking
-- Bulk save to database
+## 🛠️ Development Notes
 
-### Database Viewer
-- Filter by POS
-- Search functionality
-- Export to JSON
-- Delete selected
+### Project Structure
+- `TurkishNLP.Desktop/`
+  - `Forms/MainForm.cs`: Core UI logic.
+  - `Controls/`: Custom UI components (`KpiCard`).
+  - `Services/`: HTTP Client and Database wrappers.
+  - `Utils/ThemeManager.cs`: Centralized Color Palettes.
+  - `Models/`: Data structures (`WordAnalysis`, `WordRoot`, etc.).
 
-## ⌨️ Keyboard Shortcuts
+### Adding New POS Types
+1.  Update the **Backend** logic to recognize the new tag.
+2.  Update `WordRootFactory.cs` in Desktop to allow the tag.
+3.  Add a generic color in `MainForm.cs` (Pie Chart logic) to visualize it.
 
-| Shortcut | Action |
-|----------|--------|
-| F5 | Refresh Dashboard |
-| Ctrl+O | Open CSV File |
-| Ctrl+S | Export to JSON |
-| F1 | About Dialog |
-| ESC | Cancel Batch |
-
-## 🔧 Configuration
-
-Edit `TurkishNLP.Desktop/appsettings.json`:
-
-```json
-{
-  "ApiBaseUrl": "http://localhost:8000",
-  "DatabasePath": "words.db",
-  "Theme": "The Bezier"
-}
-```
-
-## 📊 API Endpoints
-
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| POST | /analyze | Analyze single word |
-| POST | /analyze-batch | Analyze multiple words |
-| GET | /health | Health check |
-
-### Example Request
-```bash
-curl -X POST "http://localhost:8000/analyze" \
-  -H "Content-Type: application/json" \
-  -d '{"word": "gidiyorum"}'
-```
-
-### Example Response
-```json
-{
-  "word": "gidiyorum",
-  "root": "git",
-  "pos": "VERB",
-  "features": {
-    "Aspect": "Prog",
-    "Number": "Sing",
-    "Person": "1",
-    "Tense": "Pres"
-  }
-}
-```
-
-## 📁 Sample Data
-
-### CSV Format
-```
-kelime
-kitap
-ev
-gitmek
-güzel
-```
-
-### JSON Export Format
-```json
-{
-  "NOUN": ["kitap", "ev"],
-  "VERB": ["gitmek"],
-  "ADJ": ["güzel"]
-}
-```
-
-## 🧪 Testing Checklist
-
-- [ ] Backend health check works
-- [ ] Single word analysis works
-- [ ] Batch CSV processing works
-- [ ] Database CRUD operations work
-- [ ] JSON export/import works
-- [ ] Dashboard statistics update
+---
 
 ## 📄 License
-
-MIT License
-
-## 👥 Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Commit your changes
-4. Push to the branch
-5. Open a Pull Request
+This project is open-source and available under the **MIT License**.

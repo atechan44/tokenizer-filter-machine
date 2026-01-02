@@ -1,0 +1,15 @@
+.vs/
+bin/
+obj/
+*.log
+*.txt
+*.user
+*.suo
+.vscode/
+venv/
+__pycache__/
+*.pyc
+TurkishNLP.Desktop/bin/
+TurkishNLP.Desktop/obj/
+database/*.db
+backend/__pycache__/
