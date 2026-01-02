@@ -7,6 +7,10 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using DevExpress.XtraEditors;
+using DevExpress.XtraGrid;
+using DevExpress.XtraGrid.Views.Grid;
+using DevExpress.XtraTab;
 using TurkishNLP.Desktop.Models;
 using TurkishNLP.Desktop.Services;
 
@@ -14,9 +18,9 @@ namespace TurkishNLP.Desktop.Forms
 {
     /// <summary>
     /// Main application form for Turkish NLP Analyzer.
-    /// Standard Windows Forms version.
+    /// DevExpress Windows Forms version.
     /// </summary>
-    public partial class MainForm : Form
+    public partial class MainForm : XtraForm
     {
         #region Fields
 
@@ -42,6 +46,9 @@ namespace TurkishNLP.Desktop.Forms
             _dbService = DatabaseService.Instance;
             _csvProcessor = new CsvProcessor();
             _jsonExporter = new JsonExporter();
+
+            // Apply DevExpress theme
+            DevExpress.LookAndFeel.UserLookAndFeel.Default.SetSkinStyle("The Bezier");
 
             SetupEventHandlers();
             SetupKeyboardShortcuts();
@@ -109,10 +116,10 @@ namespace TurkishNLP.Desktop.Forms
         private async void MainForm_Load(object sender, EventArgs e)
         {
             // Initialize combo boxes
-            cmbPosFilter.Items.Add("All");
+            cmbPosFilter.Properties.Items.Add("All");
             foreach (var pos in WordRootFactory.GetValidPOSTypes())
             {
-                cmbPosFilter.Items.Add(pos);
+                cmbPosFilter.Properties.Items.Add(pos);
             }
             cmbPosFilter.SelectedIndex = 0;
 
@@ -121,7 +128,7 @@ namespace TurkishNLP.Desktop.Forms
 
             // Load data
             await LoadDashboardAsync();
-            LoadWordsFromDatabase();  // This will now auto-load
+            LoadWordsFromDatabase();
 
             UpdateTitle();
         }
@@ -160,20 +167,20 @@ namespace TurkishNLP.Desktop.Forms
             var word = txtWord.Text?.Trim();
             if (string.IsNullOrEmpty(word))
             {
-                MessageBox.Show("Please enter a word.", "Input Required", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                XtraMessageBox.Show("Please enter a word.", "Input Required", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
             if (!_isBackendHealthy)
             {
-                MessageBox.Show("Backend is offline. Please start the Python API.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                XtraMessageBox.Show("Backend is offline. Please start the Python API.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
             try
             {
                 btnAnalyze.Enabled = false;
-                txtResult.Text = "Analyzing...";
+                memoResult.Text = "Analyzing...";
 
                 var result = await _apiClient.AnalyzeWordAsync(word);
                 _currentAnalysisResult = result;
@@ -184,7 +191,7 @@ namespace TurkishNLP.Desktop.Forms
                         ? string.Join("\r\n", result.Features.Select(f => $"  • {f.Key}: {f.Value}"))
                         : "  (none)";
 
-                    txtResult.Text = $"✅ Analysis Complete\r\n\r\n" +
+                    memoResult.Text = $"✅ Analysis Complete\r\n\r\n" +
                         $"Word: {result.Word}\r\n" +
                         $"Root: {result.Root ?? "(not found)"}\r\n" +
                         $"POS: {result.POS ?? "(unknown)"}\r\n\r\n" +
@@ -195,13 +202,13 @@ namespace TurkishNLP.Desktop.Forms
                 }
                 else
                 {
-                    txtResult.Text = $"❌ Failed: {result.ErrorMessage}";
+                    memoResult.Text = $"❌ Failed: {result.ErrorMessage}";
                     btnSaveWord.Enabled = false;
                 }
             }
             catch (Exception ex)
             {
-                txtResult.Text = $"❌ Error: {ex.Message}";
+                memoResult.Text = $"❌ Error: {ex.Message}";
             }
             finally
             {
@@ -213,7 +220,7 @@ namespace TurkishNLP.Desktop.Forms
         {
             if (_currentAnalysisResult == null || !_currentAnalysisResult.Success)
             {
-                MessageBox.Show("No valid result to save.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                XtraMessageBox.Show("No valid result to save.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
@@ -221,7 +228,7 @@ namespace TurkishNLP.Desktop.Forms
             if (wordRoot != null)
             {
                 _dbService.AddWord(wordRoot);
-                MessageBox.Show($"Saved: {wordRoot.Text}", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                XtraMessageBox.Show($"Saved: {wordRoot.Text}", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 _ = LoadDashboardAsync();
                 txtWord.Text = "";
                 txtWord.Focus();
@@ -243,29 +250,29 @@ namespace TurkishNLP.Desktop.Forms
 
             if (!_isBackendHealthy)
             {
-                MessageBox.Show("Backend is offline.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                XtraMessageBox.Show("Backend is offline.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
             try
             {
                 btnSelectFile.Enabled = false;
-                progressBatch.Value = 0;
+                progressBatch.Position = 0;
 
                 var words = _csvProcessor.ReadWordsFromCsv(dialog.FileName);
                 if (words.Count == 0)
                 {
-                    MessageBox.Show("No words found.", "Empty", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    XtraMessageBox.Show("No words found.", "Empty", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
                 words = words.Take(500).ToList();
-                progressBatch.Maximum = words.Count;
+                progressBatch.Properties.Maximum = words.Count;
                 lblProgress.Text = $"0/{words.Count}";
 
                 var progress = new Progress<(int current, int total)>(p =>
                 {
-                    progressBatch.Value = p.current;
+                    progressBatch.Position = p.current;
                     lblProgress.Text = $"{p.current}/{p.total}";
                 });
 
@@ -296,7 +303,7 @@ namespace TurkishNLP.Desktop.Forms
 
             var words = successful.Select(r => r.ToWordRoot()).Where(w => w != null).Cast<WordRoot>().ToList();
             _dbService.AddWords(words);
-            MessageBox.Show($"Saved {words.Count} words!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            XtraMessageBox.Show($"Saved {words.Count} words!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
             _ = LoadDashboardAsync();
             LoadWordsFromDatabase();
         }
@@ -356,7 +363,7 @@ namespace TurkishNLP.Desktop.Forms
             var words = _dbService.GetAllWords();
             if (words.Count == 0)
             {
-                MessageBox.Show("No words to export.", "Empty", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                XtraMessageBox.Show("No words to export.", "Empty", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
@@ -369,26 +376,27 @@ namespace TurkishNLP.Desktop.Forms
             if (dialog.ShowDialog() == DialogResult.OK)
             {
                 _jsonExporter.ExportToFile(words, dialog.FileName);
-                MessageBox.Show($"Exported {words.Count} words.", "Done", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                XtraMessageBox.Show($"Exported {words.Count} words.", "Done", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
         private void DeleteSelectedWords()
         {
-            if (gridDatabase.SelectedRows.Count == 0)
+            var gridView = gridDatabase.MainView as GridView;
+            if (gridView == null || gridView.SelectedRowsCount == 0)
             {
-                MessageBox.Show("Select rows to delete.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                XtraMessageBox.Show("Select rows to delete.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
 
-            if (MessageBox.Show($"Delete {gridDatabase.SelectedRows.Count} word(s)?", "Confirm", 
+            if (XtraMessageBox.Show($"Delete {gridView.SelectedRowsCount} word(s)?", "Confirm", 
                 MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
                 return;
 
             int deletedCount = 0;
-            foreach (DataGridViewRow row in gridDatabase.SelectedRows)
+            foreach (var rowHandle in gridView.GetSelectedRows())
             {
-                var text = row.Cells["Text"].Value?.ToString();
+                var text = gridView.GetRowCellValue(rowHandle, "Text")?.ToString();
                 if (!string.IsNullOrEmpty(text))
                 {
                     if (_dbService.DeleteWordByText(text))
@@ -398,7 +406,7 @@ namespace TurkishNLP.Desktop.Forms
                 }
             }
 
-            MessageBox.Show($"Deleted {deletedCount} word(s).", "Done", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            XtraMessageBox.Show($"Deleted {deletedCount} word(s).", "Done", MessageBoxButtons.OK, MessageBoxIcon.Information);
             LoadWordsFromDatabase();
             _ = LoadDashboardAsync();
         }
@@ -420,8 +428,9 @@ namespace TurkishNLP.Desktop.Forms
 
         private void ShowAbout()
         {
-            MessageBox.Show(
+            XtraMessageBox.Show(
                 "Turkish NLP Analyzer v1.0\n\n" +
+                "DevExpress WinForms Edition\n\n" +
                 "Shortcuts:\n• F5 - Refresh\n• Ctrl+O - Open CSV\n• Ctrl+S - Export\n• F1 - About",
                 "About", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }

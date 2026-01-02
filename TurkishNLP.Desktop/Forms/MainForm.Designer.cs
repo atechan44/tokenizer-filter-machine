@@ -19,90 +19,83 @@ namespace TurkishNLP.Desktop.Forms
         {
             this.components = new System.ComponentModel.Container();
 
-            // Tab Control
-            this.tabMain = new System.Windows.Forms.TabControl();
-            this.tabDashboard = new System.Windows.Forms.TabPage();
-            this.tabAnalysis = new System.Windows.Forms.TabPage();
-            this.tabBatch = new System.Windows.Forms.TabPage();
-            this.tabDatabase = new System.Windows.Forms.TabPage();
+            // DevExpress Tab Control
+            this.tabMain = new DevExpress.XtraTab.XtraTabControl();
+            this.tabDashboard = new DevExpress.XtraTab.XtraTabPage();
+            this.tabAnalysis = new DevExpress.XtraTab.XtraTabPage();
+            this.tabBatch = new DevExpress.XtraTab.XtraTabPage();
+            this.tabDatabase = new DevExpress.XtraTab.XtraTabPage();
 
-            // Dashboard Controls
-            this.lblNoun = new System.Windows.Forms.Label();
-            this.lblVerb = new System.Windows.Forms.Label();
-            this.lblAdj = new System.Windows.Forms.Label();
-            this.lblAdv = new System.Windows.Forms.Label();
-            this.lblPron = new System.Windows.Forms.Label();
-            this.lblConj = new System.Windows.Forms.Label();
-            this.lblAdp = new System.Windows.Forms.Label();
-            this.lblDet = new System.Windows.Forms.Label();
-            this.lblNum = new System.Windows.Forms.Label();
-            this.lblTotal = new System.Windows.Forms.Label();
-            this.btnRefresh = new System.Windows.Forms.Button();
+            // Dashboard Controls (DevExpress Labels)
+            this.lblNoun = new DevExpress.XtraEditors.LabelControl();
+            this.lblVerb = new DevExpress.XtraEditors.LabelControl();
+            this.lblAdj = new DevExpress.XtraEditors.LabelControl();
+            this.lblAdv = new DevExpress.XtraEditors.LabelControl();
+            this.lblPron = new DevExpress.XtraEditors.LabelControl();
+            this.lblConj = new DevExpress.XtraEditors.LabelControl();
+            this.lblAdp = new DevExpress.XtraEditors.LabelControl();
+            this.lblDet = new DevExpress.XtraEditors.LabelControl();
+            this.lblNum = new DevExpress.XtraEditors.LabelControl();
+            this.lblTotal = new DevExpress.XtraEditors.LabelControl();
+            this.btnRefresh = new DevExpress.XtraEditors.SimpleButton();
 
             // Analysis Controls
-            this.txtWord = new System.Windows.Forms.TextBox();
-            this.btnAnalyze = new System.Windows.Forms.Button();
-            this.txtResult = new System.Windows.Forms.TextBox();
-            this.btnSaveWord = new System.Windows.Forms.Button();
+            this.txtWord = new DevExpress.XtraEditors.TextEdit();
+            this.btnAnalyze = new DevExpress.XtraEditors.SimpleButton();
+            this.memoResult = new DevExpress.XtraEditors.MemoEdit();
+            this.btnSaveWord = new DevExpress.XtraEditors.SimpleButton();
 
             // Batch Controls
-            this.btnSelectFile = new System.Windows.Forms.Button();
-            this.progressBatch = new System.Windows.Forms.ProgressBar();
-            this.lblProgress = new System.Windows.Forms.Label();
-            this.gridBatch = new System.Windows.Forms.DataGridView();
-            this.btnSaveBatch = new System.Windows.Forms.Button();
+            this.btnSelectFile = new DevExpress.XtraEditors.SimpleButton();
+            this.progressBatch = new DevExpress.XtraEditors.ProgressBarControl();
+            this.lblProgress = new DevExpress.XtraEditors.LabelControl();
+            this.gridBatch = new DevExpress.XtraGrid.GridControl();
+            this.gridViewBatch = new DevExpress.XtraGrid.Views.Grid.GridView();
+            this.btnSaveBatch = new DevExpress.XtraEditors.SimpleButton();
 
             // Database Controls
-            this.cmbPosFilter = new System.Windows.Forms.ComboBox();
-            this.txtSearch = new System.Windows.Forms.TextBox();
-            this.lblDbCount = new System.Windows.Forms.Label();
-            this.gridDatabase = new System.Windows.Forms.DataGridView();
-            this.btnExport = new System.Windows.Forms.Button();
-            this.btnDelete = new System.Windows.Forms.Button();
+            this.cmbPosFilter = new DevExpress.XtraEditors.ComboBoxEdit();
+            this.txtSearch = new DevExpress.XtraEditors.TextEdit();
+            this.lblDbCount = new DevExpress.XtraEditors.LabelControl();
+            this.gridDatabase = new DevExpress.XtraGrid.GridControl();
+            this.gridViewDatabase = new DevExpress.XtraGrid.Views.Grid.GridView();
+            this.btnExport = new DevExpress.XtraEditors.SimpleButton();
+            this.btnDelete = new DevExpress.XtraEditors.SimpleButton();
 
+            ((System.ComponentModel.ISupportInitialize)(this.tabMain)).BeginInit();
             this.tabMain.SuspendLayout();
-            this.tabDashboard.SuspendLayout();
-            this.tabAnalysis.SuspendLayout();
-            this.tabBatch.SuspendLayout();
-            this.tabDatabase.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.txtWord.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.memoResult.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.progressBatch.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridBatch)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridViewBatch)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cmbPosFilter.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtSearch.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridDatabase)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridViewDatabase)).BeginInit();
             this.SuspendLayout();
 
             // ==================== TAB CONTROL ====================
-            this.tabMain.Controls.Add(this.tabDashboard);
-            this.tabMain.Controls.Add(this.tabAnalysis);
-            this.tabMain.Controls.Add(this.tabBatch);
-            this.tabMain.Controls.Add(this.tabDatabase);
             this.tabMain.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabMain.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.tabMain.Location = new System.Drawing.Point(0, 0);
             this.tabMain.Name = "tabMain";
-            this.tabMain.SelectedIndex = 0;
+            this.tabMain.SelectedTabPage = this.tabDashboard;
             this.tabMain.Size = new System.Drawing.Size(1100, 700);
             this.tabMain.TabIndex = 0;
+            this.tabMain.TabPages.AddRange(new DevExpress.XtraTab.XtraTabPage[] {
+                this.tabDashboard, this.tabAnalysis, this.tabBatch, this.tabDatabase
+            });
 
             // ==================== DASHBOARD TAB ====================
-            this.tabDashboard.Controls.Add(this.lblNoun);
-            this.tabDashboard.Controls.Add(this.lblVerb);
-            this.tabDashboard.Controls.Add(this.lblAdj);
-            this.tabDashboard.Controls.Add(this.lblAdv);
-            this.tabDashboard.Controls.Add(this.lblPron);
-            this.tabDashboard.Controls.Add(this.lblConj);
-            this.tabDashboard.Controls.Add(this.lblAdp);
-            this.tabDashboard.Controls.Add(this.lblDet);
-            this.tabDashboard.Controls.Add(this.lblNum);
-            this.tabDashboard.Controls.Add(this.lblTotal);
-            this.tabDashboard.Controls.Add(this.btnRefresh);
-            this.tabDashboard.Location = new System.Drawing.Point(4, 30);
             this.tabDashboard.Name = "tabDashboard";
-            this.tabDashboard.Padding = new System.Windows.Forms.Padding(10);
-            this.tabDashboard.Size = new System.Drawing.Size(1092, 666);
             this.tabDashboard.Text = "📊 Dashboard";
+            this.tabDashboard.Size = new System.Drawing.Size(1094, 669);
 
-            // POS Labels (3x3 grid)
-            var posLabels = new[] { lblNoun, lblVerb, lblAdj, lblAdv, lblPron, lblConj, lblAdp, lblDet, lblNum };
-            var posColors = new[] { 
+            // POS Labels setup
+            var posLabels = new DevExpress.XtraEditors.LabelControl[] { 
+                lblNoun, lblVerb, lblAdj, lblAdv, lblPron, lblConj, lblAdp, lblDet, lblNum 
+            };
+            var posColors = new System.Drawing.Color[] { 
                 System.Drawing.Color.FromArgb(52, 152, 219),   // NOUN
                 System.Drawing.Color.FromArgb(46, 204, 113),   // VERB
                 System.Drawing.Color.FromArgb(230, 126, 34),   // ADJ
@@ -113,215 +106,198 @@ namespace TurkishNLP.Desktop.Forms
                 System.Drawing.Color.FromArgb(149, 165, 166),  // DET
                 System.Drawing.Color.FromArgb(52, 73, 94)      // NUM
             };
+            var posNames = new string[] { "NOUN", "VERB", "ADJ", "ADV", "PRON", "CONJ", "ADP", "DET", "NUM" };
 
             for (int i = 0; i < 9; i++)
             {
                 posLabels[i].Location = new System.Drawing.Point(20 + (i % 3) * 200, 20 + (i / 3) * 80);
                 posLabels[i].Size = new System.Drawing.Size(180, 70);
-                posLabels[i].BackColor = posColors[i];
-                posLabels[i].ForeColor = System.Drawing.Color.White;
-                posLabels[i].Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold);
-                posLabels[i].TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-                posLabels[i].Text = "POS: 0";
+                posLabels[i].AutoSizeMode = DevExpress.XtraEditors.LabelAutoSizeMode.None;
+                posLabels[i].Appearance.BackColor = posColors[i];
+                posLabels[i].Appearance.ForeColor = System.Drawing.Color.White;
+                posLabels[i].Appearance.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold);
+                posLabels[i].Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+                posLabels[i].Appearance.TextOptions.VAlignment = DevExpress.Utils.VertAlignment.Center;
+                posLabels[i].Text = $"{posNames[i]}: 0";
+                this.tabDashboard.Controls.Add(posLabels[i]);
             }
 
-            this.lblNoun.Text = "NOUN: 0";
-            this.lblVerb.Text = "VERB: 0";
-            this.lblAdj.Text = "ADJ: 0";
-            this.lblAdv.Text = "ADV: 0";
-            this.lblPron.Text = "PRON: 0";
-            this.lblConj.Text = "CONJ: 0";
-            this.lblAdp.Text = "ADP: 0";
-            this.lblDet.Text = "DET: 0";
-            this.lblNum.Text = "NUM: 0";
-
             this.lblTotal.Location = new System.Drawing.Point(20, 280);
-            this.lblTotal.Size = new System.Drawing.Size(300, 40);
-            this.lblTotal.Font = new System.Drawing.Font("Segoe UI", 16F, System.Drawing.FontStyle.Bold);
+            this.lblTotal.Appearance.Font = new System.Drawing.Font("Segoe UI", 16F, System.Drawing.FontStyle.Bold);
             this.lblTotal.Text = "Total Words: 0";
+            this.tabDashboard.Controls.Add(this.lblTotal);
 
             this.btnRefresh.Location = new System.Drawing.Point(20, 330);
             this.btnRefresh.Size = new System.Drawing.Size(150, 40);
             this.btnRefresh.Text = "🔄 Refresh (F5)";
-            this.btnRefresh.UseVisualStyleBackColor = true;
+            this.tabDashboard.Controls.Add(this.btnRefresh);
 
             // ==================== ANALYSIS TAB ====================
-            this.tabAnalysis.Controls.Add(this.txtWord);
-            this.tabAnalysis.Controls.Add(this.btnAnalyze);
-            this.tabAnalysis.Controls.Add(this.txtResult);
-            this.tabAnalysis.Controls.Add(this.btnSaveWord);
-            this.tabAnalysis.Location = new System.Drawing.Point(4, 30);
             this.tabAnalysis.Name = "tabAnalysis";
-            this.tabAnalysis.Padding = new System.Windows.Forms.Padding(10);
-            this.tabAnalysis.Size = new System.Drawing.Size(1092, 666);
             this.tabAnalysis.Text = "🔍 Word Analysis";
+            this.tabAnalysis.Size = new System.Drawing.Size(1094, 669);
 
             this.txtWord.Location = new System.Drawing.Point(20, 20);
             this.txtWord.Size = new System.Drawing.Size(400, 30);
-            this.txtWord.Font = new System.Drawing.Font("Segoe UI", 12F);
-            this.txtWord.PlaceholderText = "Enter a Turkish word...";
+            this.txtWord.Properties.NullValuePrompt = "Enter a Turkish word...";
+            this.txtWord.Properties.NullValuePromptShowForEmptyValue = true;
+            this.tabAnalysis.Controls.Add(this.txtWord);
 
             this.btnAnalyze.Location = new System.Drawing.Point(430, 18);
             this.btnAnalyze.Size = new System.Drawing.Size(120, 35);
             this.btnAnalyze.Text = "🔍 Analyze";
-            this.btnAnalyze.UseVisualStyleBackColor = true;
+            this.tabAnalysis.Controls.Add(this.btnAnalyze);
 
-            this.txtResult.Location = new System.Drawing.Point(20, 65);
-            this.txtResult.Size = new System.Drawing.Size(600, 400);
-            this.txtResult.Multiline = true;
-            this.txtResult.ReadOnly = true;
-            this.txtResult.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtResult.Font = new System.Drawing.Font("Consolas", 11F);
+            this.memoResult.Location = new System.Drawing.Point(20, 65);
+            this.memoResult.Size = new System.Drawing.Size(600, 400);
+            this.memoResult.Properties.ReadOnly = true;
+            this.memoResult.Properties.Appearance.Font = new System.Drawing.Font("Consolas", 11F);
+            this.tabAnalysis.Controls.Add(this.memoResult);
 
             this.btnSaveWord.Location = new System.Drawing.Point(20, 480);
             this.btnSaveWord.Size = new System.Drawing.Size(180, 40);
             this.btnSaveWord.Text = "💾 Save to Database";
-            this.btnSaveWord.UseVisualStyleBackColor = true;
             this.btnSaveWord.Enabled = false;
+            this.tabAnalysis.Controls.Add(this.btnSaveWord);
 
             // ==================== BATCH TAB ====================
-            this.tabBatch.Controls.Add(this.btnSelectFile);
-            this.tabBatch.Controls.Add(this.progressBatch);
-            this.tabBatch.Controls.Add(this.lblProgress);
-            this.tabBatch.Controls.Add(this.gridBatch);
-            this.tabBatch.Controls.Add(this.btnSaveBatch);
-            this.tabBatch.Location = new System.Drawing.Point(4, 30);
             this.tabBatch.Name = "tabBatch";
-            this.tabBatch.Padding = new System.Windows.Forms.Padding(10);
-            this.tabBatch.Size = new System.Drawing.Size(1092, 666);
             this.tabBatch.Text = "📦 Batch Processing";
+            this.tabBatch.Size = new System.Drawing.Size(1094, 669);
 
             this.btnSelectFile.Location = new System.Drawing.Point(20, 20);
             this.btnSelectFile.Size = new System.Drawing.Size(180, 40);
             this.btnSelectFile.Text = "📂 Select CSV (Ctrl+O)";
-            this.btnSelectFile.UseVisualStyleBackColor = true;
+            this.tabBatch.Controls.Add(this.btnSelectFile);
 
             this.lblProgress.Location = new System.Drawing.Point(220, 28);
-            this.lblProgress.AutoSize = true;
             this.lblProgress.Text = "";
+            this.tabBatch.Controls.Add(this.lblProgress);
 
             this.progressBatch.Location = new System.Drawing.Point(20, 70);
             this.progressBatch.Size = new System.Drawing.Size(1050, 25);
+            this.progressBatch.Properties.ShowTitle = true;
+            this.tabBatch.Controls.Add(this.progressBatch);
 
             this.gridBatch.Location = new System.Drawing.Point(20, 110);
             this.gridBatch.Size = new System.Drawing.Size(1050, 450);
-            this.gridBatch.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.gridBatch.ReadOnly = true;
-            this.gridBatch.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridBatch.AllowUserToAddRows = false;
+            this.gridBatch.MainView = this.gridViewBatch;
+            this.gridViewBatch.GridControl = this.gridBatch;
+            this.gridViewBatch.OptionsBehavior.Editable = false;
+            this.gridViewBatch.OptionsSelection.MultiSelect = true;
+            this.tabBatch.Controls.Add(this.gridBatch);
 
             this.btnSaveBatch.Location = new System.Drawing.Point(20, 575);
             this.btnSaveBatch.Size = new System.Drawing.Size(200, 40);
             this.btnSaveBatch.Text = "💾 Save All to Database";
-            this.btnSaveBatch.UseVisualStyleBackColor = true;
             this.btnSaveBatch.Enabled = false;
+            this.tabBatch.Controls.Add(this.btnSaveBatch);
 
             // ==================== DATABASE TAB ====================
-            this.tabDatabase.Controls.Add(this.cmbPosFilter);
-            this.tabDatabase.Controls.Add(this.txtSearch);
-            this.tabDatabase.Controls.Add(this.lblDbCount);
-            this.tabDatabase.Controls.Add(this.gridDatabase);
-            this.tabDatabase.Controls.Add(this.btnExport);
-            this.tabDatabase.Controls.Add(this.btnDelete);
-            this.tabDatabase.Location = new System.Drawing.Point(4, 30);
             this.tabDatabase.Name = "tabDatabase";
-            this.tabDatabase.Padding = new System.Windows.Forms.Padding(10);
-            this.tabDatabase.Size = new System.Drawing.Size(1092, 666);
             this.tabDatabase.Text = "💾 Database";
+            this.tabDatabase.Size = new System.Drawing.Size(1094, 669);
 
             this.cmbPosFilter.Location = new System.Drawing.Point(20, 20);
-            this.cmbPosFilter.Size = new System.Drawing.Size(150, 30);
-            this.cmbPosFilter.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbPosFilter.Size = new System.Drawing.Size(150, 28);
+            this.cmbPosFilter.Properties.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
+            this.tabDatabase.Controls.Add(this.cmbPosFilter);
 
             this.txtSearch.Location = new System.Drawing.Point(185, 20);
-            this.txtSearch.Size = new System.Drawing.Size(250, 30);
-            this.txtSearch.PlaceholderText = "🔍 Search...";
+            this.txtSearch.Size = new System.Drawing.Size(250, 28);
+            this.txtSearch.Properties.NullValuePrompt = "🔍 Search...";
+            this.txtSearch.Properties.NullValuePromptShowForEmptyValue = true;
+            this.tabDatabase.Controls.Add(this.txtSearch);
 
             this.lblDbCount.Location = new System.Drawing.Point(450, 25);
-            this.lblDbCount.AutoSize = true;
             this.lblDbCount.Text = "";
+            this.tabDatabase.Controls.Add(this.lblDbCount);
 
             this.gridDatabase.Location = new System.Drawing.Point(20, 60);
             this.gridDatabase.Size = new System.Drawing.Size(1050, 500);
-            this.gridDatabase.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.gridDatabase.ReadOnly = true;
-            this.gridDatabase.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridDatabase.AllowUserToAddRows = false;
+            this.gridDatabase.MainView = this.gridViewDatabase;
+            this.gridViewDatabase.GridControl = this.gridDatabase;
+            this.gridViewDatabase.OptionsBehavior.Editable = false;
+            this.gridViewDatabase.OptionsSelection.MultiSelect = true;
+            this.tabDatabase.Controls.Add(this.gridDatabase);
 
             this.btnExport.Location = new System.Drawing.Point(20, 575);
             this.btnExport.Size = new System.Drawing.Size(180, 40);
             this.btnExport.Text = "📤 Export JSON (Ctrl+S)";
-            this.btnExport.UseVisualStyleBackColor = true;
+            this.tabDatabase.Controls.Add(this.btnExport);
 
             this.btnDelete.Location = new System.Drawing.Point(220, 575);
             this.btnDelete.Size = new System.Drawing.Size(150, 40);
             this.btnDelete.Text = "🗑️ Delete Selected";
-            this.btnDelete.UseVisualStyleBackColor = true;
+            this.tabDatabase.Controls.Add(this.btnDelete);
 
             // ==================== MAIN FORM ====================
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1100, 700);
             this.Controls.Add(this.tabMain);
             this.Name = "MainForm";
             this.Text = "Turkish NLP Analyzer";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Font = new System.Drawing.Font("Segoe UI", 10F);
             this.Load += new System.EventHandler(this.MainForm_Load);
 
+            ((System.ComponentModel.ISupportInitialize)(this.tabMain)).EndInit();
             this.tabMain.ResumeLayout(false);
-            this.tabDashboard.ResumeLayout(false);
-            this.tabAnalysis.ResumeLayout(false);
-            this.tabAnalysis.PerformLayout();
-            this.tabBatch.ResumeLayout(false);
-            this.tabBatch.PerformLayout();
-            this.tabDatabase.ResumeLayout(false);
-            this.tabDatabase.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.txtWord.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.memoResult.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.progressBatch.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridBatch)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridViewBatch)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.cmbPosFilter.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtSearch.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridDatabase)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridViewDatabase)).EndInit();
             this.ResumeLayout(false);
         }
 
         #endregion
 
-        private System.Windows.Forms.TabControl tabMain;
-        private System.Windows.Forms.TabPage tabDashboard;
-        private System.Windows.Forms.TabPage tabAnalysis;
-        private System.Windows.Forms.TabPage tabBatch;
-        private System.Windows.Forms.TabPage tabDatabase;
+        // Tab Control
+        private DevExpress.XtraTab.XtraTabControl tabMain;
+        private DevExpress.XtraTab.XtraTabPage tabDashboard;
+        private DevExpress.XtraTab.XtraTabPage tabAnalysis;
+        private DevExpress.XtraTab.XtraTabPage tabBatch;
+        private DevExpress.XtraTab.XtraTabPage tabDatabase;
 
         // Dashboard
-        private System.Windows.Forms.Label lblNoun;
-        private System.Windows.Forms.Label lblVerb;
-        private System.Windows.Forms.Label lblAdj;
-        private System.Windows.Forms.Label lblAdv;
-        private System.Windows.Forms.Label lblPron;
-        private System.Windows.Forms.Label lblConj;
-        private System.Windows.Forms.Label lblAdp;
-        private System.Windows.Forms.Label lblDet;
-        private System.Windows.Forms.Label lblNum;
-        private System.Windows.Forms.Label lblTotal;
-        private System.Windows.Forms.Button btnRefresh;
+        private DevExpress.XtraEditors.LabelControl lblNoun;
+        private DevExpress.XtraEditors.LabelControl lblVerb;
+        private DevExpress.XtraEditors.LabelControl lblAdj;
+        private DevExpress.XtraEditors.LabelControl lblAdv;
+        private DevExpress.XtraEditors.LabelControl lblPron;
+        private DevExpress.XtraEditors.LabelControl lblConj;
+        private DevExpress.XtraEditors.LabelControl lblAdp;
+        private DevExpress.XtraEditors.LabelControl lblDet;
+        private DevExpress.XtraEditors.LabelControl lblNum;
+        private DevExpress.XtraEditors.LabelControl lblTotal;
+        private DevExpress.XtraEditors.SimpleButton btnRefresh;
 
         // Analysis
-        private System.Windows.Forms.TextBox txtWord;
-        private System.Windows.Forms.Button btnAnalyze;
-        private System.Windows.Forms.TextBox txtResult;
-        private System.Windows.Forms.Button btnSaveWord;
+        private DevExpress.XtraEditors.TextEdit txtWord;
+        private DevExpress.XtraEditors.SimpleButton btnAnalyze;
+        private DevExpress.XtraEditors.MemoEdit memoResult;
+        private DevExpress.XtraEditors.SimpleButton btnSaveWord;
 
         // Batch
-        private System.Windows.Forms.Button btnSelectFile;
-        private System.Windows.Forms.ProgressBar progressBatch;
-        private System.Windows.Forms.Label lblProgress;
-        private System.Windows.Forms.DataGridView gridBatch;
-        private System.Windows.Forms.Button btnSaveBatch;
+        private DevExpress.XtraEditors.SimpleButton btnSelectFile;
+        private DevExpress.XtraEditors.ProgressBarControl progressBatch;
+        private DevExpress.XtraEditors.LabelControl lblProgress;
+        private DevExpress.XtraGrid.GridControl gridBatch;
+        private DevExpress.XtraGrid.Views.Grid.GridView gridViewBatch;
+        private DevExpress.XtraEditors.SimpleButton btnSaveBatch;
 
         // Database
-        private System.Windows.Forms.ComboBox cmbPosFilter;
-        private System.Windows.Forms.TextBox txtSearch;
-        private System.Windows.Forms.Label lblDbCount;
-        private System.Windows.Forms.DataGridView gridDatabase;
-        private System.Windows.Forms.Button btnExport;
-        private System.Windows.Forms.Button btnDelete;
+        private DevExpress.XtraEditors.ComboBoxEdit cmbPosFilter;
+        private DevExpress.XtraEditors.TextEdit txtSearch;
+        private DevExpress.XtraEditors.LabelControl lblDbCount;
+        private DevExpress.XtraGrid.GridControl gridDatabase;
+        private DevExpress.XtraGrid.Views.Grid.GridView gridViewDatabase;
+        private DevExpress.XtraEditors.SimpleButton btnExport;
+        private DevExpress.XtraEditors.SimpleButton btnDelete;
     }
 }

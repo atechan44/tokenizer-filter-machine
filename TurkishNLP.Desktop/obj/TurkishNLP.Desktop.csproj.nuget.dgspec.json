@@ -30,6 +30,7 @@
           "net8.0-windows"
         ],
         "sources": {
+          "C:\\Program Files\\DevExpress 25.1\\Components\\Bin\\NetCore": {},
           "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {},
           "https://nuget.devexpress.com/qjlhrFbv36fQJYTw9VFgDAiazp9PSts9C7aCwjrpjo8SGOsdyb/api/v3/index.json": {}
@@ -56,9 +57,13 @@
         "net8.0-windows7.0": {
           "targetAlias": "net8.0-windows",
           "dependencies": {
+            "DevExpress.Win": {
+              "target": "Package",
+              "version": "[25.1.*, )"
+            },
             "Microsoft.Data.Sqlite": {
               "target": "Package",
-              "version": "[8.0.0, )"
+              "version": "[10.0.1, )"
             }
           },
           "imports": [

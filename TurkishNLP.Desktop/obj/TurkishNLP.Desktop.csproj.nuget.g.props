@@ -15,4 +15,18 @@
     <SourceRoot Include="C:\Program Files\DevExpress 25.2\Components\Offline Packages\" />
     <SourceRoot Include="C:\Program Files (x86)\Microsoft Visual Studio\Shared\NuGetPackages\" />
   </ItemGroup>
+  <ImportGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
+    <Import Project="$(NuGetPackageRoot)devexpress.data.desktop\25.1.7\build\net8.0-windows\DevExpress.Data.Desktop.props" Condition="Exists('$(NuGetPackageRoot)devexpress.data.desktop\25.1.7\build\net8.0-windows\DevExpress.Data.Desktop.props')" />
+  </ImportGroup>
+  <PropertyGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
+    <PkgDevExpress_Data Condition=" '$(PkgDevExpress_Data)' == '' ">C:\Users\Atakan\.nuget\packages\devexpress.data\25.1.7</PkgDevExpress_Data>
+    <PkgDevExpress_Utils Condition=" '$(PkgDevExpress_Utils)' == '' ">C:\Users\Atakan\.nuget\packages\devexpress.utils\25.1.7</PkgDevExpress_Utils>
+    <PkgDevExpress_Win_Navigation Condition=" '$(PkgDevExpress_Win_Navigation)' == '' ">C:\Users\Atakan\.nuget\packages\devexpress.win.navigation\25.1.7</PkgDevExpress_Win_Navigation>
+    <PkgDevExpress_Win_TreeList Condition=" '$(PkgDevExpress_Win_TreeList)' == '' ">C:\Users\Atakan\.nuget\packages\devexpress.win.treelist\25.1.7</PkgDevExpress_Win_TreeList>
+    <PkgDevExpress_Win_Printing Condition=" '$(PkgDevExpress_Win_Printing)' == '' ">C:\Users\Atakan\.nuget\packages\devexpress.win.printing\25.1.7</PkgDevExpress_Win_Printing>
+    <PkgDevExpress_Win_VerticalGrid Condition=" '$(PkgDevExpress_Win_VerticalGrid)' == '' ">C:\Users\Atakan\.nuget\packages\devexpress.win.verticalgrid\25.1.7</PkgDevExpress_Win_VerticalGrid>
+    <PkgDevExpress_Win_PivotGrid Condition=" '$(PkgDevExpress_Win_PivotGrid)' == '' ">C:\Users\Atakan\.nuget\packages\devexpress.win.pivotgrid\25.1.7</PkgDevExpress_Win_PivotGrid>
+    <PkgDevExpress_Win_Grid Condition=" '$(PkgDevExpress_Win_Grid)' == '' ">C:\Users\Atakan\.nuget\packages\devexpress.win.grid\25.1.7</PkgDevExpress_Win_Grid>
+    <PkgDevExpress_Win Condition=" '$(PkgDevExpress_Win)' == '' ">C:\Users\Atakan\.nuget\packages\devexpress.win\25.1.7</PkgDevExpress_Win>
+  </PropertyGroup>
 </Project>
