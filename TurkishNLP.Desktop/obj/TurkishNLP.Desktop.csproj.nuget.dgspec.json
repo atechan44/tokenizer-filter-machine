@@ -57,13 +57,13 @@
         "net8.0-windows7.0": {
           "targetAlias": "net8.0-windows",
           "dependencies": {
-            "DevExpress.Win": {
-              "target": "Package",
-              "version": "[25.1.*, )"
-            },
             "Microsoft.Data.Sqlite": {
               "target": "Package",
               "version": "[10.0.1, )"
+            },
+            "System.Windows.Forms.DataVisualization": {
+              "target": "Package",
+              "version": "[1.0.0-prerelease.20110.1, )"
             }
           },
           "imports": [

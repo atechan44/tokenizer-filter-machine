@@ -6,6 +6,9 @@ Provides REST API endpoints for Turkish word analysis using Stanza.
 import logging
 from typing import List, Optional
 from contextlib import asynccontextmanager
+from bs4 import BeautifulSoup
+import requests
+from readability import Document
 
 from fastapi import FastAPI, HTTPException, status
 from fastapi.middleware.cors import CORSMiddleware
@@ -234,6 +237,61 @@ async def analyze_batch(request: BatchRequest):
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=f"Batch analysis failed: {str(e)}"
         )
+
+
+@app.post("/fetch-article", tags=["Tools"])
+async def fetch_article(data: dict):
+    """
+    Fetch article content from URL and extract clean text.
+    """
+    url = data.get('url')
+    
+    if not url:
+        return {"success": False, "error": "URL is required"}
+    
+    try:
+        # Fetch the page
+        headers = {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
+        }
+        response = requests.get(url, headers=headers, timeout=10)
+        response.raise_for_status()
+        
+        # Extract article content using readability
+        doc = Document(response.text)
+        title = doc.title()
+        html_content = doc.summary()
+        
+        # Parse with BeautifulSoup to get clean text
+        soup = BeautifulSoup(html_content, 'html.parser')
+        
+        # Remove script and style elements
+        for script in soup(["script", "style"]):
+            script.decompose()
+        
+        # Get text
+        text = soup.get_text()
+        
+        # Clean up whitespace
+        lines = (line.strip() for line in text.splitlines())
+        chunks = (phrase.strip() for line in lines for phrase in line.split("  "))
+        text = ' '.join(chunk for chunk in chunks if chunk)
+        
+        # Count words
+        word_count = len(text.split())
+        
+        return {
+            "success": True,
+            "title": title,
+            "text": text,
+            "word_count": word_count,
+            "url": url
+        }
+        
+    except requests.RequestException as e:
+        return {"success": False, "error": f"Failed to fetch URL: {str(e)}"}
+    except Exception as e:
+        return {"success": False, "error": f"Error processing article: {str(e)}"}
 
 
 @app.get("/", tags=["Info"])

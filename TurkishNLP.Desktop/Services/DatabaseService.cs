@@ -521,7 +521,8 @@ namespace TurkishNLP.Desktop.Services
                 connection.Open();
 
                 var command = connection.CreateCommand();
-                command.CommandText = "SELECT POS, Count FROM POSStatistics ORDER BY Count DESC";
+                // Query Words table directly for accurate filtering and counts
+                command.CommandText = "SELECT POS, COUNT(*) FROM Words GROUP BY POS ORDER BY COUNT(*) DESC";
 
                 using var reader = command.ExecuteReader();
                 while (reader.Read())
@@ -554,7 +555,8 @@ namespace TurkishNLP.Desktop.Services
                 connection.Open();
 
                 var command = connection.CreateCommand();
-                command.CommandText = "SELECT POS, Count FROM POSStatistics ORDER BY Count DESC LIMIT @limit";
+                // Query Words table directly
+                command.CommandText = "SELECT POS, COUNT(*) FROM Words GROUP BY POS ORDER BY COUNT(*) DESC LIMIT @limit";
                 command.Parameters.AddWithValue("@limit", limit);
 
                 using var reader = command.ExecuteReader();
@@ -727,6 +729,8 @@ namespace TurkishNLP.Desktop.Services
                 Console.WriteLine($"[DatabaseService] Error importing from JSON: {ex.Message}");
             }
         }
+
+
 
         #endregion
 

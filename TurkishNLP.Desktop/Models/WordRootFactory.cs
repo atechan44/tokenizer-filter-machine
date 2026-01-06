@@ -34,16 +34,21 @@ namespace TurkishNLP.Desktop.Models
             return normalizedPos switch
             {
                 "NOUN" => new NounRoot(text),
+                "PROPN" => new NounRoot(text), // Map Proper Noun to Noun
                 "VERB" => new VerbRoot(text),
                 "ADJ" => new AdjectiveRoot(text),
                 "ADV" => new AdverbRoot(text),
                 "PRON" => new PronounRoot(text),
                 "CONJ" => new ConjunctionRoot(text),
+                "CCONJ" => new ConjunctionRoot(text), // Map CCONJ to CONJ
+                "SCONJ" => new ConjunctionRoot(text), // Map SCONJ to CONJ
                 "ADP" => new AdpositionRoot(text),
                 "DET" => new DeterminerRoot(text),
                 "NUM" => new NumeralRoot(text),
-                _ => throw new ArgumentException($"Unknown POS type: '{pos}'. " +
-                    $"Valid types are: NOUN, VERB, ADJ, ADV, PRON, CONJ, ADP, DET, NUM.", nameof(pos))
+                "OTHER" => new NounRoot(text), // Fallback for OTHER
+                "PUNCT" => new NounRoot(text), // Fallback
+                "X" => new NounRoot(text), // Fallback
+                _ => new NounRoot(text) // Graceful degradation: treat unknown as Noun instead of crashing
             };
         }
 

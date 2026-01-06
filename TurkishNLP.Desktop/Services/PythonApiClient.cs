@@ -113,6 +113,12 @@ namespace TurkishNLP.Desktop.Services
             public List<string> Words { get; set; } = new List<string>();
         }
 
+        private class ArticleRequest
+        {
+            [JsonPropertyName("url")]
+            public string Url { get; set; } = string.Empty;
+        }
+
         private class ApiAnalysisResponse
         {
             [JsonPropertyName("word")]
@@ -144,6 +150,27 @@ namespace TurkishNLP.Desktop.Services
 
             [JsonPropertyName("message")]
             public string? Message { get; set; }
+        }
+
+        private class ApiArticleResponse
+        {
+            [JsonPropertyName("success")]
+            public bool Success { get; set; }
+
+            [JsonPropertyName("title")]
+            public string? Title { get; set; }
+
+            [JsonPropertyName("text")]
+            public string? Text { get; set; }
+
+            [JsonPropertyName("word_count")]
+            public int WordCount { get; set; }
+
+            [JsonPropertyName("url")]
+            public string? Url { get; set; }
+
+            [JsonPropertyName("error")]
+            public string? Error { get; set; }
         }
 
         #endregion
@@ -358,6 +385,59 @@ namespace TurkishNLP.Desktop.Services
             catch (Exception ex)
             {
                 return (false, ex.Message);
+            }
+        }
+
+        public class ArticleFetchResult
+        {
+            public bool Success { get; set; }
+            public string Title { get; set; } = string.Empty;
+            public string Text { get; set; } = string.Empty;
+            public int WordCount { get; set; }
+            public string Error { get; set; } = string.Empty;
+        }
+
+        public async Task<ArticleFetchResult> FetchArticleAsync(string url)
+        {
+            try
+            {
+                var request = new ArticleRequest { Url = url };
+
+                var response = await ExecuteWithRetryAsync(async () => 
+                {
+                     var httpResponse = await _httpClient.PostAsJsonAsync(
+                        $"{BaseUrl}/fetch-article",
+                        request,
+                        _jsonOptions
+                    );
+
+                    if (!httpResponse.IsSuccessStatusCode)
+                    {
+                        var error = await httpResponse.Content.ReadAsStringAsync();
+                         return new ArticleFetchResult { Success = false, Error = $"HTTP {httpResponse.StatusCode}: {error}" };
+                    }
+
+                    var apiResponse = await httpResponse.Content.ReadFromJsonAsync<ApiArticleResponse>(_jsonOptions);
+                    if (apiResponse == null)
+                        return new ArticleFetchResult { Success = false, Error = "Empty response" };
+
+                    if (!apiResponse.Success)
+                        return new ArticleFetchResult { Success = false, Error = apiResponse.Error ?? "Unknown API error" };
+
+                    return new ArticleFetchResult
+                    {
+                        Success = true,
+                        Title = apiResponse.Title ?? "",
+                        Text = apiResponse.Text ?? "",
+                        WordCount = apiResponse.WordCount
+                    };
+                });
+
+                return response ?? new ArticleFetchResult { Success = false, Error = "Failed to execute request" };
+            }
+            catch (Exception ex)
+            {
+                return new ArticleFetchResult { Success = false, Error = ex.Message };
             }
         }
 

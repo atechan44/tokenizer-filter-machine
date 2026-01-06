@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("TurkishNLP.Desktop")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+fa5eb51a6d61a10686e95dc865fd0596a223eab6")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0f0e89b20e8e46bd71342cb7f6475ef4e8b99255")]
 [assembly: System.Reflection.AssemblyProductAttribute("TurkishNLP.Desktop")]
 [assembly: System.Reflection.AssemblyTitleAttribute("TurkishNLP.Desktop")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
