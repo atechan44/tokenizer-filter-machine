@@ -8,6 +8,7 @@
 A powerful, dual-stack application designed for the morphological analysis, classification, and statistical visualization of Turkish words. It combines a robust **Python (FastAPI)** backend for NLP processing with a modern **.NET 8 (Windows Forms/DevExpress)** desktop interface.
 
 ---
+![WhatsApp Image 2026-01-06 at 16 04 28](https://github.com/user-attachments/assets/f24d9f73-fcaf-42b5-a947-cf48ddd4dacb)
 
 ## 🌟 Key Features
 
